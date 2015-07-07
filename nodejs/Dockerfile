@@ -4,7 +4,8 @@ MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get -q -y update && apt-get -q -y install supervisor
+RUN apt-get -q -y update && apt-get -q -y install supervisor make build-essential
+  
 
 # Install Node.js
 RUN \
@@ -20,3 +21,6 @@ RUN \
   rm -rf /tmp/node-v* && \
   echo '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
 
+RUN apt-get remove --purge -y build-essential && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*

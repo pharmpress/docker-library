@@ -1,0 +1,8 @@
+[template]
+owner       = "root"
+mode        = "0664"
+src         = "collectd.conf.tmpl"
+dest        = "/opt/collectd/etc/collectd.conf"
+check_cmd   = "/opt/collectd/sbin/collectd -t -C {{.src}}"
+
+

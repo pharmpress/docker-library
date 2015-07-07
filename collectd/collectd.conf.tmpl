@@ -1,0 +1,25 @@
+Hostname "{{getenv "COLLECTD_HOSTNAME"}}"
+
+FQDNLookup false
+Interval 10
+Timeout 2
+ReadThreads 5
+WriteThreads 5
+
+LoadPlugin cpu
+LoadPlugin interface
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin network
+
+<Plugin interface>
+    Interface "eth0"
+    IgnoreSelected false
+</Plugin>
+
+<Plugin "network">
+  <Server "{{getenv "COLLECTD_LOGSTASH_SERVER" }}" "{{getenv "COLLECTD_LOGSTASH_PORT" }}">
+  </Server>
+</Plugin>
+
+Include "/opt/collectd/etc/collectd.d/*.conf"

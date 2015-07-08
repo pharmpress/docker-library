@@ -15,15 +15,23 @@ then echo "agent.auto.register.key=${GO_AGENT_AUTO_REGISTER_KEY}" >> ${AUTO_REGI
 else echo "GO_AGENT_AUTO_REGISTER_KEY is unset" 
 fi
 
-
 if [ -n "$GO_AGENT_AUTO_REGISTER_RESOURCES" ]
 then echo "agent.auto.register.resources=${GO_AGENT_AUTO_REGISTER_RESOURCES}" >> ${AUTO_REGISTER_FILE}
+echo "agent.auto.register.resources=${GO_AGENT_AUTO_REGISTER_RESOURCES}"
 else echo "GO_AGENT_AUTO_REGISTER_RESOURCES is unset" 
 fi
 
 if [ -n "$GO_AGENT_AUTO_REGISTER_ENVIRONMENTS" ]
 then echo "agent.auto.register.environments=${GO_AGENT_AUTO_REGISTER_ENVIRONMENTS}" >> ${AUTO_REGISTER_FILE}
+echo "agent.auto.register.environments=${GO_AGENT_AUTO_REGISTER_ENVIRONMENTS}"
 else echo "GO_AGENT_AUTO_REGISTER_ENVIRONMENTS is unset"
 fi
+
+if [ -n "$GO_AGENT_AUTO_REGISTER_HOSTNAME" ]
+then echo "agent.auto.register.hostname=${GO_AGENT_AUTO_REGISTER_HOSTNAME}" >> ${AUTO_REGISTER_FILE}
+echo "agent.auto.register.hostname=${GO_AGENT_AUTO_REGISTER_HOSTNAME}"
+else echo "GO_AGENT_AUTO_REGISTER_HOSTNAME is unset"
+fi
+
 
 /usr/share/go-agent/agent.sh

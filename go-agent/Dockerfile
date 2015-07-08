@@ -7,7 +7,7 @@ RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=gocd | ap
 RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=sbt | apt-key add -
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list
 RUN echo "deb http://dl.bintray.com/gocd/gocd-deb /" | tee -a /etc/apt/sources.list
-RUN apt-get -q -y update && apt-get -q -y --force-yes install libapparmor1 sbt go-agent
+RUN apt-get -q -y update && apt-get -q -y --force-yes install libapparmor1 sbt go-agent nano
 
 
 ENV FLEET_VERSION 0.9.1

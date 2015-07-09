@@ -7,9 +7,12 @@ RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=gocd | ap
 RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=sbt | apt-key add -
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list
 RUN echo "deb http://dl.bintray.com/gocd/gocd-deb /" | tee -a /etc/apt/sources.list
-RUN apt-get -q -y update && apt-get -q -y --force-yes install libdevmapper1.02.1 libapparmor1 sbt go-agent nano
+RUN apt-get -q -y update && apt-get -q -y --force-yes install libdevmapper1.02.1 libapparmor1 libmozjs-24-bin sbt go-agent nano
 # fix docker: error while loading shared libraries: libdevmapper.so.1.02: cannot open shared object file: No such file or directory
 RUN ln -s /lib/x86_64-linux-gnu/libdevmapper.so.1.02.1 /lib/x86_64-linux-gnu/libdevmapper.so.1.02 && ldconfig
+
+ENV JS js24
+RUN curl -L http://github.com/micha/jsawk/raw/master/jsawk > /usr/local/bin/jsawk && chmod 755 /usr/local/bin/jsawk
 
 ENV FLEET_VERSION 0.9.1
 RUN wget -O /tmp/fleet-v${FLEET_VERSION}-linux-amd64.tar.gz https://github.com/coreos/fleet/releases/download/v${FLEET_VERSION}/fleet-v${FLEET_VERSION}-linux-amd64.tar.gz && \

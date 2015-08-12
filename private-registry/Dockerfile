@@ -15,6 +15,8 @@ RUN tar xzf /tmp/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz -C /tmp/ && \
 
 ADD ./boot.sh /boot.sh
 
+RUN chmod a+x /boot.sh
+
 ENTRYPOINT ["/bin/sh", "-c" ]
 
 CMD /boot.sh ${REGISTRY_HTTP_TLS_CERTIFICATE} ${REGISTRY_HTTP_TLS_KEY} && registry /etc/docker/registry/config.yml

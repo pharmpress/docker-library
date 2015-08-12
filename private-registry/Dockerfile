@@ -3,7 +3,7 @@ FROM registry:2
 MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
 
 ENV ETCD_VERSION 2.0.8
-ENV ETCDCTL_PEERS 172.17.42.1:4001
+ENV ETCDCTL_PEERS 127.0.0.1:4001
 ENV REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
 ENV REGISTRY_HTTP_TLS_KEY=/certs/domain.key
 

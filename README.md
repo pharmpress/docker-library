@@ -1,6 +1,9 @@
 # docker-library
 Base docker images
 
+## Private Registry
+[![Docker Repository on Quay.io](https://quay.io/repository/pharmpress/private-registry/status "Docker Repository on Quay.io")](https://quay.io/repository/pharmpress/private-registry)
+
 ## Collectd
 
 [![Docker Repository on Quay.io](https://quay.io/repository/pharmpress/collectd/status "Docker Repository on Quay.io")](https://quay.io/repository/pharmpress/collectd)

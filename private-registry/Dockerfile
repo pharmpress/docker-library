@@ -20,6 +20,6 @@ ADD ./boot.sh /boot.sh
 
 RUN chmod a+x /boot.sh
 
-ENTRYPOINT ["/bin/sh", "-c" ]
+ENTRYPOINT ["/boot.sh"]
 
-CMD /boot.sh "${REGISTRY_HTTP_TLS_CERTIFICATE}" "${REGISTRY_HTTP_TLS_KEY}" "${REGISTRY_AUTH_HTPASSWD_PATH}"  && registry /etc/docker/registry/config.yml
+CMD ["/etc/docker/registry/config.yml"]

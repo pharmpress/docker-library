@@ -2,6 +2,7 @@
 
 function getFileFromEtcd {
 	filePath=$1
+	echo "try to get ${filePath}"
 	if [ ! -e "$filePath" ]
 	then
 	  etcdctl get "${filePath//\/[.]/\/_}" > /dev/null
@@ -16,9 +17,12 @@ function getFileFromEtcd {
 
 echo "[$0] Get files from etcd"
 
-for file in "$@"
+
+for file in "${REGISTRY_HTTP_TLS_CERTIFICATE}" "${REGISTRY_HTTP_TLS_KEY}" "${REGISTRY_AUTH_HTPASSWD_PATH}"
 do
     getFileFromEtcd "$file"
 done
 
 echo "[$0] finish."
+
+registry "$@"

@@ -21,5 +21,3 @@ RUN apt-get remove --purge -y build-essential && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-
-http://nodejs.org/dist/v0.12.0/node-v0.12.0.tar.gz

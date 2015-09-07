@@ -9,7 +9,7 @@ ENV NODEJS_VERSION 0.12.0
 RUN apt-get -q -y update && apt-get -q -y install make build-essential 
 
 # Install Node.js
-RUN curl -sSL http://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}.tar.gz  | tar -v -C /tmp -xz && \
+RUN curl -sSL http://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}.tar.gz  | tar -C /tmp -xz && \
     cd /tmp/node-v* && \
     ./configure && \
     CXX="g++ -Wno-unused-local-typedefs" make && \
@@ -20,3 +20,6 @@ RUN curl -sSL http://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}.
 RUN apt-get remove --purge -y build-essential && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+
+http://nodejs.org/dist/v0.12.0/node-v0.12.0.tar.gz

@@ -17,17 +17,16 @@ ENV SERVER_WORK_DIR=/var/lib/go-server
 ENV JAVA_HOME "/usr/lib/jvm/java-7-openjdk-amd64/jre"
 
 
-RUN groupadd -r go
-RUN useradd -r -c "Go User" -g go -d /var/go -m -s /bin/bash go
-RUN mkdir -p /var/lib/go-server/addons /var/log/go-server /etc/go /go-addons
-RUN touch /etc/go/postgresqldb.properties
-RUN chown -R go:go /var/lib/go-server /var/log/go-server /etc/go /go-addons
+#RUN groupadd -r go && useradd -r -c "Go User" -g go -d /var/go -m -s /bin/bash go
+#RUN mkdir -p /var/lib/go-server/addons /var/log/go-server /etc/go /go-addons
+#RUN touch /etc/go/postgresqldb.properties
+#RUN chown -R go:go /var/lib/go-server /var/log/go-server /etc/go /go-addons
 
 RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=gocd | apt-key add -
 RUN echo "deb http://dl.bintray.com/gocd/gocd-deb /" | tee -a /etc/apt/sources.list
 RUN apt-get -q -y update && apt-get -q -y --force-yes install go-server && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-USER go
+#USER go
 WORKDIR /tmp
 VOLUME ["/var/lib/go-server", "/var/log/go-server", "/etc/go", "/go-addons"]
 EXPOSE 8153 8154

@@ -18,7 +18,7 @@ ENV JAVA_HOME "/usr/lib/jvm/java-7-openjdk-amd64/jre"
 
 
 #RUN groupadd -r go && useradd -r -c "Go User" -g go -d /var/go -m -s /bin/bash go
-#RUN mkdir -p /var/lib/go-server/addons /var/log/go-server /etc/go /go-addons
+RUN mkdir -p /var/lib/go-server/addons /var/log/go-server /etc/go /go-addons
 #RUN touch /etc/go/postgresqldb.properties
 #RUN chown -R go:go /var/lib/go-server /var/log/go-server /etc/go /go-addons
 

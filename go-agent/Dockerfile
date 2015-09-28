@@ -1,5 +1,5 @@
 
-FROM java:openjdk-7u79-jdk
+FROM java:7
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -18,7 +18,7 @@ ENV PATH /go/bin:/usr/src/go/bin:$PATH
 RUN curl -sSL https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz | tar -v -C /usr/src -xz
 RUN cd /usr/src/go/src && ./make.bash --no-clean 2>&1 && mkdir -p /go/src /go/bin && chmod -R 777 /go
 
-ENV FLEET_VERSION 0.9.1
+ENV FLEET_VERSION 0.10.2
 RUN wget -O /tmp/fleet-v${FLEET_VERSION}-linux-amd64.tar.gz https://github.com/coreos/fleet/releases/download/v${FLEET_VERSION}/fleet-v${FLEET_VERSION}-linux-amd64.tar.gz && \
 	tar zxvf /tmp/fleet-v${FLEET_VERSION}-linux-amd64.tar.gz -C /tmp/ && \
 	cp /tmp/fleet-v${FLEET_VERSION}-linux-amd64/fleetctl /usr/local/bin/fleetctl && \

@@ -7,7 +7,9 @@ RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=gocd | ap
 RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=sbt | apt-key add -
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list
 RUN echo "deb http://dl.bintray.com/gocd/gocd-deb /" | tee -a /etc/apt/sources.list
-RUN apt-get -q -y update && apt-get -q -y --force-yes install libdevmapper1.02.1 libapparmor1 jq sbt go-agent nano gcc libc6-dev make --no-install-recommends
+RUN apt-get -q -y update && apt-get -q -y --force-yes install libdevmapper1.02.1 libapparmor1 jq sbt go-agent nano gcc libc6-dev make python-pip python-dev --no-install-recommends
+
+RUN pip install envtpl
 
 # fix docker: error while loading shared libraries: libdevmapper.so.1.02: cannot open shared object file: No such file or directory
 RUN ln -s /lib/x86_64-linux-gnu/libdevmapper.so.1.02.1 /lib/x86_64-linux-gnu/libdevmapper.so.1.02 && ldconfig

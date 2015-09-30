@@ -4,7 +4,7 @@ MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV NODEJS_VERSION 0.12.0
+ENV NODEJS_VERSION 0.12.7
 
 RUN apt-get -q -y update && apt-get -q -y install make build-essential 
 

@@ -1,11 +1,20 @@
 
 
 baseKey=$ETCD_BOOTSTRAP_BASE_KEY
-echo "[boot] bootstrap key $baseKey" 
+
+
+etcdctl get "${baseKey}" > /dev/null
+if [ "$?" = "0" ]
+then
+	echo "[boot] bootstrap key $baseKey"
+else
+    etcdctl mkdir "${baseKey}" > /dev/null
+    echo "[boot] create bootstrap key $baseKey"
+fi
+
 for key in  $(etcdctl ls -p --recursive ${baseKey}  | grep -v "/$" )
 do
     filePath=${key#$baseKey}
-    echo "$filePath"
     if [ ! -e "$filePath" ]
     then
         echo "[boot] try to get ${filePath}"
@@ -19,11 +28,7 @@ do
 done
 
 
-if [ -z ${DH_SIZE+x} ]
-then
-  >&2 echo "[boot] no \$DH_SIZE specified using default" 
-  DH_SIZE="1024"
-fi
+
 
 if [ ! -d /etc/nginx/ssl ]
 then
@@ -34,6 +39,13 @@ DH="/etc/nginx/ssl/dhparam.pem"
 
 if [ ! -e "$DH" ]
 then
+
+    if [ -z ${DH_SIZE+x} ]
+    then
+      >&2 echo "[boot] no \$DH_SIZE specified using default" 
+      DH_SIZE="1024"
+    fi
+
     echo "[boot] generating $DH with size: $DH_SIZE"
     openssl dhparam -out "$DH" $DH_SIZE
     cat "$DH" |  etcdctl set "$baseKey$DH"  > /dev/null

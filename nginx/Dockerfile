@@ -3,9 +3,10 @@ FROM nginx
 ENV CONFD_VERSION 0.10.0
 ENV ETCD_VERSION 2.0.8
 ENV ETCD_BOOTSTRAP_BASE_KEY /bootstrap
+ENV ETCDCTL_PEERS 127.0.0.1:4001
 
 RUN apt-get update && \
-    apt-get install -y supervisord && \
+    apt-get install -y supervisor wget curl nano && \
     rm -rf /var/lib/apt/lists/*
 
 RUN wget -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64  && \

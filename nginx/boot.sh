@@ -1,34 +1,33 @@
 
 
-function getFileFromEtcd {
-    baseKey=$1
-    for key in  $(etcdctl ls -p --recursive ${baseKey}  | grep -v "/$" )
-    do
-        filePath=${key#$baseKey}
-        echo "$filePath"
-        if [ ! -e "$filePath" ]
+baseKey=$ETCD_BOOTSTRAP_BASE_KEY
+echo "[boot] bootstrap key $baseKey" 
+for key in  $(etcdctl ls -p --recursive ${baseKey}  | grep -v "/$" )
+do
+    filePath=${key#$baseKey}
+    echo "$filePath"
+    if [ ! -e "$filePath" ]
+    then
+        echo "[boot] try to get ${filePath}"
+        if [ ! -d $(dirname "${filePath}") ]
         then
-            echo "[boot] try to get ${filePath}"
-            if [ ! -d $(dirname "${filePath}") ]
-            then
-                mkdir -p $(dirname "${filePath}")
-            fi
-            etcdctl get "${key}" > "$filePath"
-            echo "[boot] get $filePath from etcd"
+            mkdir -p $(dirname "${filePath}")
         fi
-    done
-}
+        etcdctl get "${key}" > "$filePath"
+        echo "[boot] get $filePath from etcd"
+    fi
+done
 
 
 if [ -z ${DH_SIZE+x} ]
 then
-  >&2 echo ">> no \$DH_SIZE specified using default" 
+  >&2 echo "[boot] no \$DH_SIZE specified using default" 
   DH_SIZE="1024"
 fi
 
 if [ ! -d /etc/nginx/ssl ]
 then
-	mkdir -p /etc/nginx/ssl
+  mkdir -p /etc/nginx/ssl
 fi
 
 DH="/etc/nginx/ssl/dhparam.pem"
@@ -61,9 +60,8 @@ FULL_CHAIN="/etc/nginx/ssl/full_chain.pem"
 
 if [ ! -e "$FULL_CHAIN" ]
 then
-    cp "$PUBLIC" "$FULL_CHAIN"
-    cat "$FULL_CHAIN" | etcdctl set "$baseKey$FULL_CHAIN"  > /dev/null
-  fi
+  cp "$PUBLIC" "$FULL_CHAIN"
+  cat "$FULL_CHAIN" | etcdctl set "$baseKey$FULL_CHAIN"  > /dev/null
 fi
 
 echo "[boot] booting container. ETCD: $ETCDCTL_PEERS"

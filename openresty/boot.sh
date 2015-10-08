@@ -2,7 +2,7 @@
 
 baseKey=$ETCD_BOOTSTRAP_BASE_KEY
 
-etcdctl get "${baseKey}" > /dev/null
+etcdctl ls "${baseKey}" > /dev/null
 if [ "$?" = "0" ]
 then
 	echo "[boot] bootstrap key $baseKey"
@@ -28,7 +28,7 @@ set -eo pipefail
 echo "[boot] booting container. ETCD: $ETCDCTL_PEERS"
 
 # Loop until confd has updated the nginx config
-until confd -debug -onetime ; do
+until confd -log-level=debug -onetime ; do
   echo "[boot] waiting for confd ..."
   sleep 5
 done

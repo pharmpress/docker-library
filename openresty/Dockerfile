@@ -6,9 +6,10 @@ MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
 ENV DEBIAN_FRONTEND noninteractive
 ENV OPENRESTY_VERSION 1.7.10.1
 ENV LUAROCKS_VERSION 2.2.0
-ENV CONFD_VERSION 0.8.0
+ENV CONFD_VERSION 0.10.0
 ENV ETCD_VERSION 2.0.8
-ENV ETCDCTL_PEERS 172.17.42.1:4001
+ENV ETCDCTL_PEERS 127.0.0.1:4001
+ENV ETCD_BOOTSTRAP_BASE_KEY /bootstrap
 
 #Install supervisor
 RUN apt-get -q -y update && apt-get -q -y install supervisor unzip curl ca-certificates nano wget \
@@ -76,5 +77,6 @@ RUN curl -L https://github.com/coreos/etcd/releases/download/v${ETCD_VERSION}/et
  	rm -rf /tmp/etcd-v*
 
 ADD ./boot.sh       /boot.sh
+ADD ./nginx_supervisord.conf    /etc/supervisor/conf.d/nginx.conf
 
 CMD /boot.sh && supervisord -n

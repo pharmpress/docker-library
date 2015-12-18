@@ -1,0 +1,11 @@
+init_config:
+  notify:
+    - ramiro.calle@rpharms.com
+
+instances:
+
+    # API Health Check on DataManager
+  - name: data-manager
+    url: https://api.medicinescomplete.com/ping?user_key=USER_KEY
+    window: 5
+    threshold: 3

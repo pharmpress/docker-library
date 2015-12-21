@@ -37,7 +37,7 @@ if [[ $PROXY_PASSWORD ]]; then
 fi
 
 if [[ $USER_KEY ]]; then
-	sed -i -e "s/USER_KEY/${USER_KEY}/" /etc/dd-agent/http_check.yaml
+	sed -i -e "s/USER_KEY/${USER_KEY}/" /etc/dd-agent/conf.d/http_check.yaml
 fi
 
 find /conf.d -name '*.yaml' -exec cp {} /etc/dd-agent/conf.d \;

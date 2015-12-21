@@ -6,6 +6,10 @@ instances:
 
     # API Health Check on DataManager
   - name: data-manager
-    url: https://api.medicinescomplete.com/ping?user_key=USER_KEY
+    url: https://api.medicinescomplete.io/ping?user_key=USER_KEY
     window: 5
     threshold: 3
+    skip_event: true
+    disable_ssl_validation: false
+    collect_response_time: true
+

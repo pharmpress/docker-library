@@ -1,4 +1,4 @@
-FROM registry:2
+FROM distribution/registry:2.2.1
 
 MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
 

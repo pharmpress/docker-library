@@ -25,4 +25,4 @@ done
 
 echo "[$0] finish."
 
-registry "$@"
+registry /etc/docker/registry/config.yml

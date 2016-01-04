@@ -20,6 +20,8 @@ RUN tar xzf /tmp/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz -C /tmp/ && \
 ADD ./config.yml /etc/docker/registry/config.yml
 ADD ./boot.sh /boot.sh
 
+RUN chmod +x /boot.sh
+
 ENTRYPOINT ["/bin/sh", "-c"]
 
-CMD /boot.sh /etc/docker/registry/config.yml
+CMD ["/boot.sh"]

@@ -22,4 +22,4 @@ ADD ./boot.sh /boot.sh
 
 ENTRYPOINT ["/bin/sh", "-c"]
 
-CMD ["/boot.sh", "/etc/docker/registry/config.yml"]
+CMD /boot.sh /etc/docker/registry/config.yml

@@ -1,5 +1,5 @@
 
-FROM java:8-jdk
+FROM java:8
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -7,7 +7,7 @@ RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=gocd | ap
 RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=sbt | apt-key add -
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list
 RUN echo "deb http://dl.bintray.com/gocd/gocd-deb /" | tee -a /etc/apt/sources.list
-RUN apt-get -q -y update && apt-get -q -y --force-yes install libdevmapper1.02.1 libapparmor1 jq sbt go-agent nano gcc libc6-dev make python-pip python-dev --no-install-recommends
+RUN apt-get -q -y update && apt-get -q -y --force-yes install libdevmapper1.02.1 libapparmor1 jq sbt go-agent nano gcc libc6-dev make python-pip python-dev expect --no-install-recommends
 
 RUN pip install envtpl
 

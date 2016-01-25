@@ -40,6 +40,10 @@ if [[ $USER_KEY ]]; then
 	sed -i -e "s/USER_KEY/${USER_KEY}/" /etc/dd-agent/conf.d/http_check.yaml
 fi
 
+if [[ $COREOS_PRIVATE_IPV4 ]]; then
+    sed -i -e "s/COREOS_PRIVATE_IPV4/${COREOS_PRIVATE_IPV4}/" /etc/dd-agent/conf.d/etcd.yaml
+fi
+
 find /conf.d -name '*.yaml' -exec cp {} /etc/dd-agent/conf.d \;
 
 find /checks.d -name '*.py' -exec cp {} /etc/dd-agent/checks.d \;

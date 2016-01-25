@@ -1,4 +1,4 @@
-FROM elasticsearch:1.4.5
+FROM elasticsearch:1.7.4
 
 ENV ETCDCTL_PEERS 127.0.0.1:4001
 

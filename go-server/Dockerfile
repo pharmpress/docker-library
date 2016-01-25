@@ -1,5 +1,5 @@
 
-FROM java:7
+FROM java:8
 
 MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
 

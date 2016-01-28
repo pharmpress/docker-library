@@ -14,7 +14,7 @@ ENV SERVER_MAX_PERM_GEN 256m
 ENV SERVER_MIN_PERM_GEN 128m
 ENV SERVER_WORK_DIR=/var/lib/go-server
 
-ENV JAVA_HOME "/usr/lib/jvm/java-7-openjdk-amd64/jre"
+ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64/jre"
 
 
 #RUN groupadd -r go && useradd -r -c "Go User" -g go -d /var/go -m -s /bin/bash go

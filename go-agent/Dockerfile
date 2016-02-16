@@ -3,6 +3,7 @@ FROM java:8
 
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN apt-get -q -y update && apt-get -q -y --force-yes install apt-transport-https
 
 RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=sbt | apt-key add -
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list

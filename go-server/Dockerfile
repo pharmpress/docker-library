@@ -16,6 +16,7 @@ ENV SERVER_WORK_DIR=/var/lib/go-server
 
 ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64/jre"
 
+RUN apt-get -q -y update && apt-get -q -y --force-yes install apt-transport-https
 
 RUN groupadd -r go && useradd -r -c "Go User" -g go -d /var/go -m -s /bin/bash go
 RUN mkdir -p /var/lib/go-server/addons /var/log/go-server /etc/go /go-addons

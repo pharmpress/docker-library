@@ -17,7 +17,7 @@ ENV SERVER_WORK_DIR=/var/lib/go-server
 ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64/jre"
 
 
-#RUN groupadd -r go && useradd -r -c "Go User" -g go -d /var/go -m -s /bin/bash go
+RUN groupadd -r go && useradd -r -c "Go User" -g go -d /var/go -m -s /bin/bash go
 RUN mkdir -p /var/lib/go-server/addons /var/log/go-server /etc/go /go-addons
 #RUN touch /etc/go/postgresqldb.properties
 #RUN chown -R go:go /var/lib/go-server /var/log/go-server /etc/go /go-addons
@@ -31,8 +31,4 @@ WORKDIR /tmp
 VOLUME ["/var/lib/go-server", "/var/log/go-server", "/etc/go", "/go-addons"]
 EXPOSE 8153 8154
 
-
 CMD DAEMON=N MANUAL_SETTING=Y /usr/share/go-server/server.sh
-
-#/var/lib/go-server
-#/etc/go

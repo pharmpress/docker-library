@@ -8,8 +8,8 @@ RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=sbt | apt
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list
 # RUN curl -L https://bintray.com/user/downloadSubjectPublicKey?username=gocd | apt-key add -
 # RUN echo "deb http://dl.bintray.com/gocd/gocd-deb /" | tee -a /etc/apt/sources.list
-RUN curl https://download.go.cd/GOCD-GPG-KEY.asc | sudo apt-key add -
-RUN echo "deb https://download.go.cd /" | sudo tee /etc/apt/sources.list.d/gocd.list
+RUN curl -L https://download.go.cd/GOCD-GPG-KEY.asc | apt-key add -
+RUN echo "deb https://download.go.cd /" | tee /etc/apt/sources.list.d/gocd.list
 
 RUN apt-get -q -y update && apt-get -q -y --force-yes install libdevmapper1.02.1 libapparmor1 jq sbt go-agent nano gcc libc6-dev make python-pip python-dev expect --no-install-recommends
 

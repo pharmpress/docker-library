@@ -1,0 +1,4 @@
+init_config:
+
+instances:
+  - nginx_status_url: http://COREOS_PRIVATE_IPV4:8000/nginx_status/

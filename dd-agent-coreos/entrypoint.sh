@@ -42,6 +42,7 @@ fi
 
 if [[ $COREOS_PRIVATE_IPV4 ]]; then
     sed -i -e "s/COREOS_PRIVATE_IPV4/${COREOS_PRIVATE_IPV4}/" /etc/dd-agent/conf.d/etcd.yaml
+    sed -i -e "s/COREOS_PRIVATE_IPV4/${COREOS_PRIVATE_IPV4}/" /etc/dd-agent/conf.d/nginx.yaml
 fi
 
 find /conf.d -name '*.yaml' -exec cp {} /etc/dd-agent/conf.d \;

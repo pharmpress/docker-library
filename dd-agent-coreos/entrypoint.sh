@@ -37,7 +37,7 @@ if [[ $PROXY_PASSWORD ]]; then
 fi
 
 if [[ $USER_KEY ]]; then
-	sed -i -e "s/USER_KEY/${USER_KEY}/" /etc/dd-agent/conf.d/http_check.yaml
+	sed -e "s/USER_KEY/${USER_KEY}/" /etc/dd-agent/conf.d/http_check.yaml.tmpl > /etc/dd-agent/conf.d/http_check.yaml
 fi
 
 if [[ $COREOS_PRIVATE_IPV4 ]]; then

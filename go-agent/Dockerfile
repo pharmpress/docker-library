@@ -1,5 +1,5 @@
 
-FROM java:8
+FROM java:8-jdk
 
 ENV DEBIAN_FRONTEND noninteractive
 

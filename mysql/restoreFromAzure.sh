@@ -7,5 +7,4 @@ rm *.sql || true
 azurectl --account-name "${AZURE_ACCOUNT_NAME}" --account-key "${AZURE_ACCOUNT_KEY}" download --container "${AZURE_CONTAINER}" --blob "backup/${COMPRESSED_FILE}" "${COMPRESSED_FILE}"
 gunzip "${COMPRESSED_FILE}"
 
-mysql -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}" < "${FILE}"
-
+mysql -h "${MYSQL_HOST}" -u root "${MYSQL_DATABASE}" < "${FILE}"

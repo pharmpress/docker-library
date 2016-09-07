@@ -11,4 +11,4 @@ gunzip "${COMPRESSED_FILE}"
 
 # ${MYSQL_ROOT_PASSWORD}
 
-mysql -h "${MYSQL_HOST}" -u "${MYSQL_USER}" "${MYSQL_DATABASE}" -p "${MYSQL_PASSWORD}" < "${FILE}"
+mysql -h "${MYSQL_HOST}" -u "${MYSQL_USER}" -p${MYSQL_PASSWORD} "${MYSQL_DATABASE}" < "${FILE}"

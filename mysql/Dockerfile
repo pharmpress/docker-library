@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:5.7.15
 
 RUN apt-get -y update && \
     apt-get -y install ca-certificates curl nano && \

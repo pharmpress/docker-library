@@ -1,0 +1,30 @@
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    # config.vm.box = "phusion-open-ubuntu-14.04-amd64"
+    # config.vm.box_url = "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box"
+
+
+    # config.vm.provider :vmware_fusion do |f, override|
+    #     override.vm.box_url = "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vmwarefusion.box"
+    # end
+
+    config.vm.box = "ubuntu/trusty64"
+
+    if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
+        # Install Docker
+        pkg_cmd = "curl -sSL https://get.docker.com/ | sh ; "
+        # Add vagrant user to the docker group
+        pkg_cmd << "usermod -a -G docker vagrant; "
+        pkg_cmd << "sudo apt-add-repository ppa:ansible/ansible -y ; "
+        pkg_cmd << "sudo apt-get update && sudo apt-get install ansible -y ; "
+        
+        config.vm.provision :shell, :inline => pkg_cmd
+      end
+
+    config.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook.yml"
+    end
+end

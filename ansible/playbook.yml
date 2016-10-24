@@ -1,0 +1,8 @@
+- name: "application container"
+  docker_container:
+    name: myapplication
+    image: pharmpress/hello-play
+    ports:
+    - "8080:9000"
+    env:
+        SECRET_KEY: ssssh

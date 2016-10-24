@@ -1,0 +1,5 @@
+interactions-mysql/
+tmp/
+*.tar.gz
+all.sql
+test_docker.sh

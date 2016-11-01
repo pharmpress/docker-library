@@ -14,6 +14,8 @@ ENV SERVER_MAX_PERM_GEN 256m
 ENV SERVER_MIN_PERM_GEN 128m
 ENV SERVER_WORK_DIR=/var/lib/go-server
 
+ENV GOCD_VERSION 16.11.0-4185
+
 ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64/jre"
 
 RUN apt-get -q -y update && apt-get -q -y --force-yes install apt-transport-https
@@ -28,7 +30,7 @@ RUN mkdir -p /var/lib/go-server/addons /var/log/go-server /etc/go /go-addons
 RUN curl -L https://download.go.cd/GOCD-GPG-KEY.asc | apt-key add -
 RUN echo "deb https://download.go.cd /" | tee /etc/apt/sources.list.d/gocd.list
 
-RUN apt-get -q -y update && apt-get -q -y --force-yes install go-server && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get -q -y update && apt-get -q -y --force-yes install go-server=$GOCD_VERSION && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #USER go
 WORKDIR /tmp

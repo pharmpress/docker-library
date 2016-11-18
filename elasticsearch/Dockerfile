@@ -20,7 +20,7 @@ RUN set -x \
     && /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head/1.x \
     && /usr/share/elasticsearch/bin/plugin install elasticsearch/elasticsearch-cloud-azure/2.8.2 \
     && addgroup -S -g 108 elasticsearch && adduser -S -u 105 -G elasticsearch elasticsearch \
-    && apk del curl && rm -rf /var/cache/apk/*
+    && rm -rf /var/cache/apk/*
 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
 

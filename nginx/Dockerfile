@@ -13,4 +13,4 @@ RUN apk update \
 
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 ADD nginx.conf /etc/nginx/nginx.conf
-
+ADD nginx.supervisor.conf /etc/supervisor/conf.d/nginx.supervisor.conf

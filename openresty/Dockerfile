@@ -49,7 +49,6 @@ ARG _RESTY_CONFIG_DEPS="--with-openssl=/tmp/openssl-${RESTY_OPENSSL_VERSION} --w
 RUN apk update \
     && apk add --no-cache --virtual .build-deps \
         build-base \
-        curl \
         gd-dev \
         geoip-dev \
         libxslt-dev \
@@ -58,14 +57,15 @@ RUN apk update \
         perl-dev \
         readline-dev \
         zlib-dev \
-        python=$PYTHON_VERSION \
-        py-pip=$PY_PIP_VERSION \
     && apk add --no-cache \
         gd \
         geoip \
+        curl \
         libgcc \
         libxslt \
         zlib \
+        python=$PYTHON_VERSION \
+        py-pip=$PY_PIP_VERSION \
     && pip install supervisor==$SUPERVISOR_VERSION \
     && mkdir /var/log/supervisor/ \
     && mkdir /etc/supervisor/ \

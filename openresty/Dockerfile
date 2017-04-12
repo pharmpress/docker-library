@@ -1,82 +1,101 @@
-FROM debian:jessie
-
+FROM pharmpress/java
 
 MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV OPENRESTY_VERSION 1.7.10.1
-ENV LUAROCKS_VERSION 2.2.0
-ENV CONFD_VERSION 0.10.0
-ENV ETCD_VERSION 2.0.8
-ENV ETCDCTL_PEERS 127.0.0.1:4001
-ENV ETCD_BOOTSTRAP_BASE_KEY /bootstrap
 
-#Install supervisor
-RUN apt-get -q -y update && apt-get -q -y install supervisor unzip curl ca-certificates nano wget \
-	make \
-	build-essential \
-	libpcre3-dev \
-	libssl-dev \
-	libexpat1-dev \
-	libreadline-dev \
-  	libncurses5-dev
-	
-RUN curl -L http://openresty.org/download/ngx_openresty-${OPENRESTY_VERSION}.tar.gz | tar xz -C /tmp/ && \
-  cd /tmp/ngx_openresty-* && \
-  ./configure --prefix=/opt/openresty \
-    --http-client-body-temp-path=/var/nginx/client_body_temp \
-    --http-proxy-temp-path=/var/nginx/proxy_temp \
-    --http-log-path=/var/nginx/access.log \
-    --error-log-path=/var/nginx/error.log \
-    --pid-path=/var/nginx/nginx.pid \
-    --lock-path=/var/nginx/nginx.lock \	
-	--with-pcre-jit \
-	--with-ipv6 \
-    --with-luajit \
-    --with-luajit-xcflags=-DLUAJIT_ENABLE_LUA52COMPAT \
-    --with-md5-asm \
-    --with-sha1-asm \
+ARG PYTHON_VERSION=2.7.12-r0
+ARG PY_PIP_VERSION=8.1.2-r0
+ARG SUPERVISOR_VERSION=3.3.0
+
+
+ARG RESTY_VERSION="1.11.2.2"
+ARG RESTY_OPENSSL_VERSION="1.0.2j"
+ARG RESTY_PCRE_VERSION="8.39"
+ARG RESTY_J="1"
+ARG RESTY_CONFIG_OPTIONS="\
     --with-file-aio \
-    --with-http_stub_status_module \
-    --with-http_ssl_module \
-    --with-http_realip_module \
+    --with-http_addition_module \
+    --with-http_auth_request_module \
+    --with-http_dav_module \
+    --with-http_flv_module \
+    --with-http_geoip_module=dynamic \
     --with-http_gunzip_module \
-    --without-http_fastcgi_module \
-    --without-http_uwsgi_module \
-    --without-http_scgi_module \
-    --without-http_redis2_module \
- && make \
- && make install \
- && rm -rf /tmp/ngx_openresty*
+    --with-http_gzip_static_module \
+    --with-http_image_filter_module=dynamic \
+    --with-http_mp4_module \
+    --with-http_random_index_module \
+    --with-http_realip_module \
+    --with-http_secure_link_module \
+    --with-http_slice_module \
+    --with-http_ssl_module \
+    --with-http_stub_status_module \
+    --with-http_sub_module \
+    --with-http_v2_module \
+    --with-http_xslt_module=dynamic \
+    --with-ipv6 \
+    --with-mail \
+    --with-mail_ssl_module \
+    --with-md5-asm \
+    --with-pcre-jit \
+    --with-sha1-asm \
+    --with-stream \
+    --with-stream_ssl_module \
+    --with-threads \
+    "
 
-RUN wget -qO- http://luarocks.org/releases/luarocks-${LUAROCKS_VERSION}.tar.gz | tar xvz -C /tmp/ \
- && cd /tmp/luarocks-* \
- && ./configure --with-lua=/opt/openresty/luajit \
-    --with-lua-include=/opt/openresty/luajit/include/luajit-2.1 \
-    --with-lua-lib=/opt/openresty/lualib \
- && make && make install \
- && rm -rf /tmp/luarocks-*
+# These are not intended to be user-specified
+ARG _RESTY_CONFIG_DEPS="--with-openssl=/tmp/openssl-${RESTY_OPENSSL_VERSION} --with-pcre=/tmp/pcre-${RESTY_PCRE_VERSION}"
 
-RUN ln -sf /opt/openresty/nginx/sbin/nginx /usr/sbin/nginx \
- && ln -sf /opt/openresty/bin/resty /usr/local/bin/resty \
- && ln -sf /opt/openresty/nginx/conf /etc/nginx \
- && ln -sf /opt/openresty/luajit/bin/luajit-2.1.0-alpha /opt/openresty/luajit/bin/lua \
- && ln -sf /opt/openresty/luajit/bin/lua /usr/local/bin/lua \
- && mkdir -p /var/nginx/cache \
- && rm /opt/openresty/nginx/conf/nginx.conf
+RUN apk update \
+    && apk add --no-cache --virtual .build-deps \
+        build-base \
+        curl \
+        gd-dev \
+        geoip-dev \
+        libxslt-dev \
+        linux-headers \
+        make \
+        perl-dev \
+        readline-dev \
+        zlib-dev \
+        python=$PYTHON_VERSION \
+        py-pip=$PY_PIP_VERSION \
+    && apk add --no-cache \
+        gd \
+        geoip \
+        libgcc \
+        libxslt \
+        zlib \
+    && pip install supervisor==$SUPERVISOR_VERSION \
+    && mkdir /var/log/supervisor/ \
+    && mkdir /etc/supervisor/ \
+    && mkdir /etc/supervisor/conf.d/ \
+    && cd /tmp \
+    && curl -fSL https://www.openssl.org/source/openssl-${RESTY_OPENSSL_VERSION}.tar.gz -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
+    && tar xzf openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
+    && curl -fSL https://ftp.pcre.org/pub/pcre/pcre-${RESTY_PCRE_VERSION}.tar.gz -o pcre-${RESTY_PCRE_VERSION}.tar.gz \
+    && tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz \
+    && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
+    && tar xzf openresty-${RESTY_VERSION}.tar.gz \
+    && cd /tmp/openresty-${RESTY_VERSION} \
+    && ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} \
+    && make -j${RESTY_J} \
+    && make -j${RESTY_J} install \
+    && cd /tmp \
+    && rm -rf \
+        openssl-${RESTY_OPENSSL_VERSION} \
+        openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
+        openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION} \
+        pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION} \
+    && apk del .build-deps \
+    && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log \
+    && rm -rf /tmp/* /var/cache/apk/*
 
-RUN apt-get remove --purge -y build-essential && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
-RUN wget -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64  && \
-	chmod a+x /usr/local/bin/confd
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin/:/usr/local/openresty/nginx/sbin/:/usr/local/openresty/bin/
 
-RUN curl -L https://github.com/coreos/etcd/releases/download/v${ETCD_VERSION}/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz | tar xz -C /tmp/ && \
- 	cp /tmp/etcd-v${ETCD_VERSION}-linux-amd64/etcdctl /usr/local/bin/etcdctl && \
- 	rm -rf /tmp/etcd-v*
 
-ADD ./boot.sh       /boot.sh
-ADD ./nginx_supervisord.conf    /etc/supervisor/conf.d/nginx.conf
-
-CMD /boot.sh && supervisord -n
+ADD supervisord.conf /etc/supervisor/supervisord.conf
+ADD nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+ADD openresty.supervisor.conf /etc/supervisor/conf.d/openresty.supervisor.conf

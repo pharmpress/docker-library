@@ -1,12 +1,12 @@
 FROM pharmpress/java
 
 ENV GOSU_VERSION 1.10
-ENV ELASTICSEARCH_VERSION 1.7.5
+ENV ELASTICSEARCH_VERSION 5.1.1
 
 RUN set -x \
     && sed 's/^hosts:\([\ ]+\)files dns$/hosts:\1dns files/' -i /etc/nsswitch.conf \
     && apk upgrade --update \
-    && apk add --update gnupg curl \
+    && apk add --update gnupg curl ca-certificates gnupg openssl tar \
 	&& curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64" \
 	&& curl -o /usr/local/bin/gosu.asc -sSL "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64.asc" \
 	&& export GNUPGHOME="$(mktemp -d)" \
@@ -15,10 +15,9 @@ RUN set -x \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true \
-    && curl -fsSL https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.tar.gz  | tar xzf - -C /usr/share \
+    && curl -fsSL https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.tar.gz  | tar xzf - -C /usr/share \
     && mv /usr/share/elasticsearch-$ELASTICSEARCH_VERSION /usr/share/elasticsearch \
-    && /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head/1.x \
-    && /usr/share/elasticsearch/bin/plugin install elasticsearch/elasticsearch-cloud-azure/2.8.2 \
+    && /usr/share/elasticsearch/bin/elasticsearch-plugin install repository-azure \
     && addgroup -S -g 108 elasticsearch && adduser -S -u 105 -G elasticsearch elasticsearch \
     && rm -rf /var/cache/apk/*
 

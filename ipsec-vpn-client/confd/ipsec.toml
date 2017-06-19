@@ -1,0 +1,5 @@
+[template]
+owner       = "root"
+mode        = "0644"
+src         = "ipsec.conf.tmpl"
+dest        = "/etc/ipsec.conf"

@@ -1,0 +1,46 @@
+config setup
+    uniqueids=no
+    strictcrlpolicy=no
+    charondebug="ike 3, knl 2, cfg 3, mgr 3, chd 2, net 3"
+
+conn %default
+    leftid={{getenv "USERNAME"}}
+    leftfirewall=yes
+
+    dpdaction=restart
+    dpddelay=2400s
+    fragmentation=yes
+    forceencaps=yes
+    compress=no
+
+    ikelifetime=60m
+    keylife=20m
+    rekeymargin=3m
+    keyingtries=2
+    rekey=yes
+    reauth=yes
+    closeaction=restart
+    keyexchange=ikev2
+
+    ike=aes128-md5-modp1536,aes128-md5-modp1536,modp2048,modp2048s256
+    esp=aes128-sha1
+
+# ---------------------------------------------------------------------------------------------
+
+ca pharmpress
+    cacert=pharmpress.net.pem
+    auto=add
+
+conn pharmpress
+    right=34.251.195.193
+    rightid=vpn.pharmpress.net
+    rightsubnet=10.96.0.0/11
+    rightfirewall=yes
+    rightdns=10.99.0.2
+
+    leftsourceip=%config4
+    leftauth=psk
+
+    mobike=no
+    type=tunnel
+    auto=start

@@ -6,7 +6,7 @@ RUN apt-get -y update && \
 	apt-get -y clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl -L -o /usr/local/bin/azurectl https://github.com/rrramiro/azurectl/releases/download/v0.0.1/azurectl-linux-amd64 && \
+RUN curl -L -o /usr/local/bin/azurectl https://github.com/pharmpress/azurectl/releases/download/v0.0.4/azurectl-linux-amd64 && \
     chmod +x /usr/local/bin/azurectl
 
 ADD backupToAzure.sh /usr/local/bin/backupToAzure.sh

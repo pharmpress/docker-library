@@ -1,13 +1,14 @@
 #!/bin/bash
 
-RESTORE_FILE=${1:-${MYSQL_RESTORE_VERSION}}
+DATABASE="${1}"
+ENVIRONMENT="${2}"
+TIMESTAMP="${3}"
+FILE="${DATABASE}-${ENVIRONMENT}-${TIMESTAMP}.sql"
+COMPRESSED_FILE="${FILE}.gz"
 
-COMPRESSED_FILE="${RESTORE_FILE}.sql.gz"
-FILE="${COMPRESSED_FILE%.gz}"
-rm *.sql || true
+rm -f *.sql
 
 azurectl --account-name "${AZURE_ACCOUNT_NAME}" --account-key "${AZURE_ACCOUNT_KEY}" download --container "${AZURE_CONTAINER}" --blob "backup/${COMPRESSED_FILE}" "${COMPRESSED_FILE}"
 gunzip "${COMPRESSED_FILE}"
 
-
-cat "${FILE}" <(echo "FLUSH PRIVILEGES ;") | mysql -h "${MYSQL_HOST}" -uroot -p${MYSQL_ROOT_PASSWORD} mysql
+cat "${FILE}" | mysql -h "${MYSQL_HOST}" -uroot -p${MYSQL_ROOT_PASSWORD} "${1}"

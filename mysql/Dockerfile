@@ -1,4 +1,4 @@
-FROM mysql:5.7.15
+FROM mysql:5.7.18
 
 RUN apt-get -y update && \
     apt-get -y install ca-certificates curl nano && \
@@ -13,4 +13,4 @@ ADD backupToAzure.sh /usr/local/bin/backupToAzure.sh
 ADD restoreFromAzure.sh /usr/local/bin/restoreFromAzure.sh
 RUN chmod +x /usr/local/bin/*Azure.sh
 
-WORKDIR /tmp
+COPY init-dbs.sh /docker-entrypoint-initdb.d

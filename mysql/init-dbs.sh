@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} <<-EOSQL
+mysql -uroot -p <<-EOSQL
     CREATE DATABASE IF NOT EXISTS workflowmanager;
     CREATE DATABASE IF NOT EXISTS idmanager;
     CREATE DATABASE IF NOT EXISTS sources;

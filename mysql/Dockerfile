@@ -6,11 +6,11 @@ RUN apt-get -y update && \
 	apt-get -y clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl -L -o /usr/local/bin/azurectl https://github.com/pharmpress/azurectl/releases/download/v0.0.4/azurectl-linux-amd64 && \
-    chmod +x /usr/local/bin/azurectl
+RUN curl -L -o /usr/local/bin/storagectl https://github.com/pharmpress/storagectl/releases/download/v0.0.1/storagectl-linux-amd64 && \
+    chmod +x /usr/local/bin/storagectl
 
-ADD backupToAzure.sh /usr/local/bin/backupToAzure.sh
-ADD restoreFromAzure.sh /usr/local/bin/restoreFromAzure.sh
-RUN chmod +x /usr/local/bin/*Azure.sh
+ADD backupToStorage.sh /usr/local/bin/backupToStorage.sh
+ADD restoreFromStorage.sh /usr/local/bin/restoreFromStorage.sh
+RUN chmod +x /usr/local/bin/*Storage.sh
 
 COPY init-dbs.sh /docker-entrypoint-initdb.d

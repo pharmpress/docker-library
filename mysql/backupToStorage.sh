@@ -15,4 +15,4 @@ COMPRESSED_FILE="${FILE}.gz"
 mysqldump --opt --protocol=TCP --host=${MYSQL_HOST} --user=root --password=${MYSQL_ROOT_PASSWORD} --databases "${DATABASE}" | gzip -9 > "${COMPRESSED_FILE}"
 ls -l ${COMPRESSED_FILE}
 
-azurectl --account-name "${AZURE_ACCOUNT_NAME}" --account-key "${AZURE_ACCOUNT_KEY}" upload --container "${AZURE_CONTAINER}" --blob "backup/${COMPRESSED_FILE}" "${COMPRESSED_FILE}"
+azurectl --account-name "${STORAGE_ACCOUNT_NAME}" --account-key "${STORAGE_ACCOUNT_KEY}" "${STORAGE_ENGINE}" upload --container "${STORAGE_CONTAINER}" --blob "backup/${COMPRESSED_FILE}" "${COMPRESSED_FILE}"

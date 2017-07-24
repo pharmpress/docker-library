@@ -15,4 +15,4 @@ COMPRESSED_FILE="${FILE}.gz"
 pg_dump -c --username postgres "${DATABASE}" | gzip -9 > "${COMPRESSED_FILE}"
 ls -l ${COMPRESSED_FILE}
 
-azurectl --account-name "${AZURE_ACCOUNT_NAME}" --account-key "${AZURE_ACCOUNT_KEY}" upload --container "${AZURE_CONTAINER}" --blob "backup/${COMPRESSED_FILE}" "${COMPRESSED_FILE}"
+storagectl --account-name "${STORAGE_ACCOUNT_NAME}" --account-key "${STORAGE_ACCOUNT_KEY}" "${STORAGE_ENGINE}" upload --container "${STORAGE_CONTAINER}" --blob "backup/${COMPRESSED_FILE}" "${COMPRESSED_FILE}"

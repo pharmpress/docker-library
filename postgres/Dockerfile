@@ -8,7 +8,7 @@ RUN apt-get -y update \
  && apt-get -y clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl -L -o /usr/local/bin/storagectl https://github.com/pharmpress/storagectl/releases/download/v0.0.1/storagectl-linux-amd64 && \
+RUN curl -L -o /usr/local/bin/storagectl https://github.com/pharmpress/storagectl/releases/download/v0.0.2/storagectl-linux-amd64 && \
     chmod +x /usr/local/bin/storagectl
 
 ADD backupToStorage.sh /usr/local/bin/backupToStorage.sh

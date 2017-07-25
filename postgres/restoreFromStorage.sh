@@ -12,3 +12,5 @@ storagectl --account-name "${STORAGE_ACCOUNT_NAME}" --account-key "${STORAGE_ACC
 gunzip "${COMPRESSED_FILE}"
 
 cat "${FILE}" | psql --username postgres "${DATABASE}"
+
+rm "${FILE}"

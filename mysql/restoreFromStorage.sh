@@ -12,3 +12,5 @@ storagectl --account-name "${STORAGE_ACCOUNT_NAME}" --account-key "${STORAGE_ACC
 gunzip "${COMPRESSED_FILE}"
 
 cat "${FILE}" | mysql -uroot -p${MYSQL_ROOT_PASSWORD} "${1}"
+
+rm "${FILE}"

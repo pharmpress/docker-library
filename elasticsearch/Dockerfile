@@ -18,7 +18,7 @@ RUN set -x \
     && curl -fsSL https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.tar.gz  | tar xzf - -C /usr/share \
     && mv /usr/share/elasticsearch-$ELASTICSEARCH_VERSION /usr/share/elasticsearch \
     && /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head/1.x \
-    && /usr/share/elasticsearch/bin/plugin install elasticsearch/elasticsearch-cloud-azure/2.8.2 \
+    && /usr/share/elasticsearch/bin/plugin install elasticsearch/elasticsearch-cloud-azure/2.8.3 \
     && /usr/share/elasticsearch/bin/plugin install elasticsearch/elasticsearch-cloud-aws/2.7.1 \
     && addgroup -S -g 108 elasticsearch && adduser -S -u 105 -G elasticsearch elasticsearch \
     && rm -rf /var/cache/apk/*

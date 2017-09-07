@@ -18,6 +18,7 @@ RUN set -x \
     && curl -fsSL https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.tar.gz  | tar xzf - -C /usr/share \
     && mv /usr/share/elasticsearch-$ELASTICSEARCH_VERSION /usr/share/elasticsearch \
     && /usr/share/elasticsearch/bin/elasticsearch-plugin install repository-azure \
+    && /usr/share/elasticsearch/bin/elasticsearch-plugin install repository-s3 \
     && addgroup -S -g 108 elasticsearch && adduser -S -u 105 -G elasticsearch elasticsearch \
     && rm -rf /var/cache/apk/*
 

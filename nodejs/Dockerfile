@@ -1,6 +1,6 @@
 FROM pharmpress/java
 
-MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
+MAINTAINER Mark Williams <mark.williams@rpharms.com>
 
 ENV NODEJS_VERSION v8.11.2
 ENV PYTHON_VERSION=2.7.12-r0

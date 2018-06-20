@@ -1,12 +1,12 @@
 FROM pharmpress/java
 
-MAINTAINER Ramiro Calle <ramiro.calle@rpharms.com>
+MAINTAINER Mark Williams <mark.williams@rpharms.com>
 
-ENV NODEJS_VERSION v0.12.7
+ENV NODEJS_VERSION v8.11.2
 ENV PYTHON_VERSION=2.7.12-r0
 ENV PY_PIP_VERSION=8.1.2-r0
 ENV SUPERVISOR_VERSION=3.3.0
-ENV NPM_VERSION 2.11.3
+ENV NPM_VERSION 5.8.0
 ENV CONFIG_FLAGS "--fully-static"
 ENV DEL_PKGS "libgcc libstdc++"
 ENV RM_DIRS /usr/include

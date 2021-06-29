@@ -14,8 +14,8 @@ ENV RM_DIRS /usr/include
 
 RUN apk add --update curl
 
-RUN echo http://dl-8.alpinelinux.org/alpine/v3.6/main > /etc/apk/repositories; \
-    echo http://dl-8.alpinelinux.org/alpine/v3.6/community >> /etc/apk/repositories
+RUN echo http://dl-cdn.alpinelinux.org/alpine/v3.6/main > /etc/apk/repositories; \
+    echo http://dl-cdn.alpinelinux.org/alpine/v3.6/community >> /etc/apk/repositories
 
 RUN apk update && apk add --no-cache --wait 10 curl make gcc g++ python linux-headers paxctl libgcc libstdc++ gnupg python=$PYTHON_VERSION py-pip=$PY_PIP_VERSION && \
   pip install supervisor==$SUPERVISOR_VERSION && \
